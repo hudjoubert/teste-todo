@@ -1,43 +1,24 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
-import { Container, Content, Text, Item, Label, Input, Button } from 'native-base';
+import { Container, Content, Text, List, ListItem, Button } from 'native-base';
 import { connect } from 'react-redux';
-import { AddTask, getTask } from '../actions';
-import AddBar from '../components/AddBar';
-import ListItem from '../components/ListItem';
 
 class ListView extends Component {
-        state = {
-        value: ''
-    }
-    componentDidMount() {
-        this.props.getTask(this.props.tasks);
-    }
-
     render() {
-        console.log(this.props);
+        const { navigate } = this.props.navigation;
 
-        const toDoList = this.props.tasks.map(task => {
-            
-            return <ListItem key={task} task={task}></ListItem>
-        })
-        console.log(toDoList);
-        
         return (
             <Container>
                 <Content>
-                    <Item >
-                        <Label>TO DO:</Label>
-                        <Input placeholder='add something'
-                            returnKeyType="next"
-                            placeholder='add something'
-                            onChangeText={(task) => this.setState({ value: task })}
-                            value={this.state.value}
-                        />
-                    </Item>
-                    <Button primary onPress={() => this.props.AddTask(this.state.value, this.props.tasks)}><Text> Add </Text></Button>
+                    <Button primary onPress={() => navigate('AddView')}><Text> Adicionar Item </Text></Button>
+                    <List
+                        dataArray={this.props.tasks}
+                        renderRow={data =>
+                        <ListItem onPress={null}>
+                            <Text >{data}</Text>
+                        </ListItem>}
+                    />
                 </Content>
-                {toDoList}
             </Container>
         );
     }
@@ -45,4 +26,4 @@ class ListView extends Component {
 const mapStateToProps = (state) => {
     return { tasks: state.task.tasks }
 }
-export default connect(mapStateToProps, { AddTask, getTask })(ListView);
+export default connect(mapStateToProps)(ListView);
