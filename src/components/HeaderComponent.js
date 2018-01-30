@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { Container, Header, Body, Right, Button, Icon, Title, Text } from 'native-base';
 class HeaderComponent extends Component {
   render() {
@@ -10,7 +10,7 @@ class HeaderComponent extends Component {
           </Body>
           <Right>
             <Button transparent onPress={() => this.props.nav.navigate('AddView')}>
-              <Text style={styles.btnAdd}>Add</Text>
+              <Text style={styles.btnAdd}>add</Text>
             </Button>
           </Right>
         </Header>
@@ -20,8 +20,8 @@ class HeaderComponent extends Component {
 
 const styles = StyleSheet.create({
     btnAdd:{
-        color: 'white',
-        fontSize: 18
+        color: Platform.OS === 'ios' ? 'blue' : 'white',
+        fontSize: 14
     }
 });
 export default HeaderComponent;
